@@ -1,25 +1,18 @@
-//
-//  HomePageView.swift
-//  marketplace
-//
-//  Created by Bravo on 26/03/2025.
-//
-
 import SwiftUI
 
 struct HomePageView: View {
     @EnvironmentObject var cartManager: CartManager
     
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             ZStack(alignment: .top) {
                 Color.white
                     .edgesIgnoringSafeArea(.all)
-                VStack{
-                    AppBar()
+                VStack {
+                    AppBar() // AppBar now uses the EnvironmentObject from the root view
                     SearchView1()
                     ImageSliderView()
-                    HStack{
+                    HStack {
                         Text("New Rivals")
                             .font(.title2)
                             .fontWeight(.medium)
@@ -38,7 +31,7 @@ struct HomePageView: View {
                                     Text(product.name)
                                 } label: {
                                     ProductCartView(product: product)
-                                        .border(Color.gray, width: 2) // Debug borde
+                                        .environmentObject(cartManager)
                                         .cornerRadius(10)
                                 }
                             }
@@ -47,17 +40,16 @@ struct HomePageView: View {
                     }
                 }
             }
-            .environmentObject(CartManager())
-            
         }
-        
+        .environmentObject(cartManager) // Pass the environment object down the view hierarchy
     }
 }
 
 struct HomePageView_Previews: PreviewProvider {
     static var previews: some View {
+        // Create an instance of CartManager and pass it to the view
         HomePageView()
-           
+            .environmentObject(CartManager()) // Properly pass the CartManager to the preview
     }
 }
 
@@ -65,37 +57,35 @@ struct AppBar: View {
     @EnvironmentObject var cartManager: CartManager
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                // AppBar content (location and cart)
-                HStack {
-                    Image(systemName: "location.north.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .padding(.trailing)
-                    
-                    Text("Kampala, Uganda")
-                        .font(.title2)
-                        .foregroundColor(.gray)
-                    
-                    Spacer()
-                    
-                    NavigationLink(destination: Text("")) {
-                        CartButton(numberOfProducts: cartManager.products.count)
-                    }
+        VStack {
+            // AppBar content (location and cart)
+            HStack {
+                Image(systemName: "location.north.fill")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing)
+                
+                Text("Kampala, Uganda")
+                    .font(.title2)
+                    .foregroundColor(.gray)
+                
+                Spacer()
+                
+                NavigationLink(destination: CartViewPage()
+                    .environmentObject(cartManager)
+                ) {
+                    CartButton(numberOfProducts: cartManager.products.count)
                 }
-                .padding() // Padding for AppBar
-                
-                // Text directly below the AppBar
-                Text("Find the most \n Luxurious")
-                    .font(.largeTitle.bold())
-                
-                + Text(" Furniture")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(Color("kPrimary"))
             }
+            .padding() // Padding for AppBar
+            
+            // Text directly below the AppBar
+            Text("Find the most \n Luxurious")
+                .font(.largeTitle.bold())
+            
+            + Text(" Furniture")
+                .font(.largeTitle.bold())
+                .foregroundColor(Color("kPrimary"))
         }
-        .environmentObject(CartManager())
-        .padding()
     }
 }
