@@ -30,14 +30,16 @@ struct HomePageView: View {
                     }
                     .padding()
                     
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack(spacing: 10){
-                            ForEach(productList, id: \.id){product in
-                                //this takes a user to the product details of the clicked product
-                                NavigationLink{
+                    // In HomePageView.swift
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(productList, id: \.id) { product in
+                                NavigationLink {
                                     Text(product.name)
                                 } label: {
                                     ProductCartView(product: product)
+                                        .border(Color.gray, width: 2) // Debug borde
+                                        .cornerRadius(10)
                                 }
                             }
                         }

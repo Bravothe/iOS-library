@@ -1,9 +1,4 @@
-//
-//  SearchView.swift
-//  marketplace
-//
-//  Created by Bravo on 25/03/2025.
-//
+
 
 import SwiftUI
 
