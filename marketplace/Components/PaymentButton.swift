@@ -7,7 +7,7 @@ struct CustomPaymentButton: View {
         Button(action: {
             action() // Trigger the action passed from CartViewPage
         }) {
-            Text("Payment Now")
+            Text("Payment Now 1")
                 .fontWeight(.bold) // Make the label bold
                 .padding() // Add padding for a better touch area
                 .frame(maxWidth: .infinity) // Make the button stretch horizontally
